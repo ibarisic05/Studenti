@@ -19,10 +19,13 @@ class EntryViewController: UIViewController {
     
     // MARK: - Variables
     var studenti: Array<Student> = Array()
+    var selectedStudent: Student!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Unos"
         
         imeLabel.text = "Ime:"
         prezimeLabel.text = "Prezime:"
@@ -31,6 +34,12 @@ class EntryViewController: UIViewController {
         showBtn.setTitle("Prikazi studente", for: .normal)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? DetailsViewController {
+            vc.student = selectedStudent
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func onTapCreateBtn(_ sender: Any) {
         guard let ime = imeTextField.text, ime.count > 3 else {return}
@@ -52,7 +61,10 @@ class EntryViewController: UIViewController {
             }
             
             let studentAction = UIAlertAction(title: actionTitle, style: .default) { _ in
-                student.polozio = !student.polozio
+                
+                self.selectedStudent = student
+                self.performSegue(withIdentifier: "details", sender: self)
+                
             }
             alert.addAction(studentAction)
         }
