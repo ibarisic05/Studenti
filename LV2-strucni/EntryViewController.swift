@@ -18,7 +18,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var showBtn: UIButton!
     
     // MARK: - Variables
-    var studenti: Array<Student> = Array()
+    var studenti: [Student] = []
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
